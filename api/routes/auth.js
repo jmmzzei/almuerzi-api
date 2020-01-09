@@ -2,6 +2,14 @@ const express = require('express')
 const router = express.Router()
 const Users = require('../models/Users')
 const crypto = require('crypto')
+const jwt = require('jsonwebtoken')
+const { isAuthenticated } = require('../auth/index')
+
+const singToken = (_id) => {
+    return jwt.sign({_id}, 'secret', {
+        expiresIn: 60 * 60 * 24 * 365,
+    })
+}
 
 router.post('/register', (req, res) => {
     res.send('register')
@@ -47,6 +55,10 @@ router.post('/login', (req, res) => {
                 return res.send('User and/or password doesn\' match')
             })
         })
+})
+
+router.get('/me', isAuthenticated, (req,res) => {
+    res.send(req.user)
 })
 
 
