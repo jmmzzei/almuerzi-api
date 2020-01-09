@@ -1,6 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
+
 const app = express()
 
 require('dotenv').config()
@@ -13,6 +14,7 @@ const router = express.Router()
 
 app.use('/api/meals', require('./routes/meals'))
 app.use('/api/orders', require('./routes/orders'))
+app.use('/api/auth', require('./routes/auth'))
 
 app.get('*', (req, res) => {
     // Users.find()
